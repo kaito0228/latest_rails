@@ -1,0 +1,24 @@
+# ほぼこれ
+# - [GitHub Actions が RuboCop できないのはどう考えてもお前らが悪い！](https://zenn.dev/miya789/articles/github-actions-rubocop)
+name: RuboCop
+on: [ pull_request ]
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.1
+          bundler-cache: true
+      - name: Rubocop
+        uses: reviewdog/action-rubocop@v1
+        with:
+          rubocop_version: gemfile
+          rubocop_flags: -D -E -S -P # - [Rubocop を使っているアナタがするべき２つのこと - Qiita](https://qiita.co/tonluqclml/items/92071019923ab6a2e8e3)
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          filter_mode: nofilter # 差分以外のとこも見れるように
+          fail_on_error: true # 一応エラーが出て気付けるように

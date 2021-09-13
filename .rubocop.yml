@@ -1,0 +1,17 @@
+# 基本的にはバグの検出のみに使う（コードの規約統一のために使用しない）
+# - [RubocopでRubyコードのスタイルを強制せず、バグだけ検出 - Quipper Product Team Blog](https://quipper.hatenablog.com/entry/2021-07-25-rubocop-ruby-ujihisa)
+
+inherit_from: .rubocop_todo.yml
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+AllCops:
+  TargetRubyVersion: 3.0
+  TargetRailsVersion: 6.1
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
